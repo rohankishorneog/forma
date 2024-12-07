@@ -1,6 +1,6 @@
 "use client";
 
-import { Field_Types } from "@/app/constants/constants";
+import { fields } from "@/app/constants/constants";
 import React, { useState, useRef, useEffect } from "react";
 
 const MobileAddFieldButton = () => {
@@ -38,7 +38,7 @@ const MobileAddFieldButton = () => {
 
       {showDropdown && (
         <div className="flex flex-col gap-3 absolute top-9 border left-8 backdrop-blur-sm rounded-md p-2 w-40 ">
-          {Field_Types.map((field) => (
+          {fields.map((field) => (
             <button
               key={field.type}
               className="bg-slate-500 text-white rounded-md text-sm md:text-lg "
