@@ -1,3 +1,5 @@
+import { Field_Types } from "../types";
+
 export const fields = [
   {
     type: "short answer",
@@ -22,3 +24,7 @@ export const fields = [
     placeholder: "Choose an option",
   },
 ];
+
+export const findField = (type: string) => {
+  return fields.find((field) => field.type === type);
+};

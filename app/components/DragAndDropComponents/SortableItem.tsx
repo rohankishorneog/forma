@@ -22,7 +22,11 @@ export function SortableItem(props: SortableProps) {
   };
 
   return (
-    <div ref={setNodeRef} style={style} className="flex items-center">
+    <div
+      ref={setNodeRef}
+      style={style}
+      className="flex items-center w-full h-full "
+    >
       <span
         {...dragHandleAttributes}
         className="cursor-grab mr-2 p-2 bg-transparent rounded opacity-5 hover:opacity-65"
