@@ -1,9 +1,15 @@
 "use client";
 
 import { fields } from "@/app/constants/constants";
+import { Field_Types } from "@/app/types";
 import React, { useState, useRef, useEffect } from "react";
 
-const MobileAddFieldButton = () => {
+interface MobileAddFieldButtonProps {
+  handleAddField: (field: Field_Types) => void;
+}
+const MobileAddFieldButton = ({
+  handleAddField,
+}: MobileAddFieldButtonProps) => {
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -28,9 +34,9 @@ const MobileAddFieldButton = () => {
   }, []);
 
   return (
-    <div className="absolute top-2 left-2 lg:hidden" ref={dropdownRef}>
+    <div className="absolute top-20 left-4 lg:hidden" ref={dropdownRef}>
       <button
-        className="absolute bg-black w-8 h-8 rounded-full text-white"
+        className="absolute bg-green-600 w-8 h-8 rounded-full text-white"
         onClick={handleDropdown}
       >
         +
@@ -41,7 +47,8 @@ const MobileAddFieldButton = () => {
           {fields.map((field) => (
             <button
               key={field.type}
-              className="bg-slate-500 text-white rounded-md text-sm md:text-lg "
+              className="bg-green-600 text-white rounded-md text-sm md:text-lg "
+              onClick={() => handleAddField(field)}
             >
               {field.type}
             </button>

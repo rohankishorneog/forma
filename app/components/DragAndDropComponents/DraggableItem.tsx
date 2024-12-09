@@ -2,12 +2,9 @@
 
 import React, { useRef, useState, useEffect, ReactNode } from "react";
 
-import {
-  draggable,
-} from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
+import { draggable } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 import invariant from "tiny-invariant";
 import { Field_Types } from "@/app/types";
-
 
 const DraggableItem = ({
   children,
@@ -43,7 +40,9 @@ const DraggableItem = ({
 
   return (
     <>
-      <div ref={ref}>{children}</div>
+      <div ref={ref} className={`${dragging ? "bg-lime-600" : ""}`}>
+        {children}
+      </div>
     </>
   );
 };

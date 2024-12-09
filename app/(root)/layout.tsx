@@ -3,7 +3,7 @@ import NavBar from "../components/NavBar/NavBar";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   return (
-    <main>
+    <main className="w-screen h-screen">
       <NavBar />
       {children}
     </main>

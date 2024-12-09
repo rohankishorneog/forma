@@ -40,7 +40,7 @@ export default function DropTarget({ children, field }: DropTargetProps) {
   return (
     <div
       className={`${
-        isDraggedOver ? "bg-black" : ""
+        isDraggedOver ? "bg-gray-100" : ""
       } w-full h-full flex flex-col items-center`}
       ref={ref}
     >

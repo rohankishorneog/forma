@@ -58,7 +58,7 @@ const FormCanvas = ({ form }: FormCanvas) => {
     modalRef.current?.close();
   };
 
-  const handleAddAndField = (field: Field_Types) => {
+  const handleAddField = (field: Field_Types) => {
     if (!field.id) {
       setFormFields((prevFields) => [
         ...prevFields,
@@ -175,28 +175,41 @@ const FormCanvas = ({ form }: FormCanvas) => {
 
   return (
     <>
-      <MobileAddFieldButton />
+      <MobileAddFieldButton handleAddField={handleAddField} />
 
-      <div className="w-screen h-screen flex">
+      <div className="h-[calc(100vh-6rem)] w-full flex">
         <div className="flex flex-col w-full h-full items-center pt-12">
           {/* Draggable Buttons */}
-          <div className="w-full justify-center gap-7 mb-10 hidden md:flex">
+          <div className="w-full justify-center gap-2 mb-10 hidden md:flex sm:w-full md:w-[500px] lg:w-[750px]">
             {fields.map((field) => (
               <DraggableItem key={field.type} field={field}>
-                <button className="bg-slate-900 text-white px-2 py-1 rounded-md">
+                <button className="bg-lime-200 border-2 border-lime-500  px-2 py-1 rounded-md w-full h-full">
                   {field.type}
                 </button>
               </DraggableItem>
             ))}
           </div>
 
-          <input
-            value={formTitle}
-            placeholder="Add Form Title"
-            onChange={(e) => handleFormTitle(e.target.value)}
-          />
+          <div className="sm:w-full md:w-[500px] lg:w-[750px] flex gap-3 mb-1 items-center justify-between">
+            <label className="font-bold">Title:</label>
+
+            <input
+              value={formTitle}
+              placeholder="Add Form Title"
+              onChange={(e) => handleFormTitle(e.target.value)}
+              className="bg-transparent flex-1"
+            />
+
+            <button
+              className="bg-green-700 text-white p-1 rounded-md mt-3 text-sm"
+              onClick={handleCreateForm}
+            >
+              {form?._id ? "Update " : "Create"}
+            </button>
+          </div>
+
           <div
-            className={`bg-slate-600 border-2 border-black shadow-md h-[calc(100vh-10rem)] flex  ${
+            className={`bg-lime-200 border-2 border-lime-500 shadow-md h-[calc(100vh-20rem)] flex  ${
               fields.length > 0 ? "items-start" : "items-center"
             } rounded-md p-10 sm:w-full md:w-[500px] lg:w-[750px] overflow-y-auto`}
           >
@@ -205,19 +218,17 @@ const FormCanvas = ({ form }: FormCanvas) => {
                 <p>Add fields by clicking or dragging the fields here.</p>
               )}
 
-              <div className="flex flex-col gap-2 w-full bg-pink-400">
+              <div className="flex flex-col gap-2 w-full  rounded-lg">
                 {formFields.map((field: Field_Types) => (
                   <DropTarget key={field.id} field={field}>
                     <DraggableItem key={field.id} field={field}>
-                      <div key={field.id} className="flex gap-2 w-full">
-                        <div className="w-full">
-                          <label className="w-full break-words break-all">
-                            {field.label}
-                          </label>
-                          {getFieldComponent(field)}
-                        </div>
+                      <div
+                        key={field.id}
+                        className="flex gap-2 w-full items-center h-full border-lime-400 border p-2 rounded-md"
+                      >
+                        {getFieldComponent(field)}
 
-                        <div className="self-end flex flex-col gap-2">
+                        <div className=" flex flex-col gap-2">
                           <button onClick={() => handleEdit(field)}>E</button>
                           <button onClick={() => handleRemove(field)}>R</button>
                         </div>
@@ -228,30 +239,23 @@ const FormCanvas = ({ form }: FormCanvas) => {
               </div>
             </DropTarget>
           </div>
-          <button
-            className="bg-green-700 text-white p-2 rounded-md"
-            onClick={handleCreateForm}
-          >
-            {form?._id ? "Update Form" : "Create Form"}
-          </button>
-
-          <div className="p-4 bg-gray-100 shadow-lg rounded-md ml-4 hidden md:flex">
-            <FieldDetails
-              selectedField={selectedField}
-              handleUpdateField={handleUpdateField}
-              setSelectedField={setSelectedField}
-            />
-          </div>
-          {/* Field Details Modal for smaller screen   */}
-          <FieldDetailsModal
+        </div>
+        <div className=" bg-gray-100 shadow-lime-400 rounded-md  hidden md:flex shadow-lg p-2 h-full">
+          <FieldDetails
             selectedField={selectedField}
             handleUpdateField={handleUpdateField}
             setSelectedField={setSelectedField}
-            openDialog={openDialog}
-            closeDialog={closeModal}
-            ref={modalRef}
           />
         </div>
+        {/* Field Details Modal for smaller screen   */}
+        <FieldDetailsModal
+          selectedField={selectedField}
+          handleUpdateField={handleUpdateField}
+          setSelectedField={setSelectedField}
+          openDialog={openDialog}
+          closeDialog={closeModal}
+          ref={modalRef}
+        />
       </div>
     </>
   );
