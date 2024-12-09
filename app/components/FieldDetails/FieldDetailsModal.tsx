@@ -21,6 +21,7 @@ const FieldDetailsModal = forwardRef<Ref, FieldDetailsModalProps>(
   ) => {
     return (
       <dialog
+        ref={ref}
         open={selectedField !== null}
         className=" relative rounded-md shadow-lg p-6 bg-white w-96 max-w-full md:hidden"
       >
