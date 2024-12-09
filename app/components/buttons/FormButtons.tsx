@@ -28,17 +28,20 @@ const FormButtons = ({ formId }: FormButtonsProps) => {
   };
 
   return (
-    <div className="flex gap-7 items-center">
-      <Link href={`/forms/${formId}`}>
-        <button className="  px-4 py-2 rounded-xl border border-green-200">
-          View
-        </button>
-      </Link>
-      <Link href={`/forms/${formId}/responses`}>
-        <button className="  px-4 py-2 rounded-xl border border-green-500">
-          Responses
-        </button>
-      </Link>
+    <div className="flex flex-col md:flex-row gap-7 items-center">
+      <div className="flex flex-col md:flex-row gap-2">
+        <Link href={`/forms/${formId}/responses`}>
+          <button className=" px-1.5 md:px-4 py-0.5 md:py-1 rounded-xl border border-green-500 text-xs  md:text-md">
+            Responses
+          </button>
+        </Link>
+        <Link href={`/forms/${formId}`}>
+          <button className=" text-xs  md:text-md px-1.5 md:px-4 py-0.5 md:py-1 rounded-xl border border-green-200">
+            View
+          </button>
+        </Link>
+      </div>
+
       <div className="flex flex-col gap-2">
         <Link href={`/forms/${formId}/edit`}>
           <button className="bg-yellow-500 text-white px-3 py-1 rounded-md">
