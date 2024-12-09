@@ -19,7 +19,6 @@ const FieldDetails = ({
     value: string,
     index?: number
   ) => {
-    if (!value) return;
     setSelectedField((prev) => {
       if (!prev) return prev;
 
@@ -38,9 +37,9 @@ const FieldDetails = ({
 
   if (!selectedField) {
     return (
-      <div className="p-4 bg-gray-100 shadow-lg rounded-md ml-4 hidden md:flex">
-        <p className="text-gray-500">Select a field to edit details.</p>
-      </div>
+      <p className="text-gray-500 text-center flex justify-center items-center">
+        Select a field to edit details.
+      </p>
     );
   }
 
