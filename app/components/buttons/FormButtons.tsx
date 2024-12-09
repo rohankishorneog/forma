@@ -15,6 +15,11 @@ const FormButtons = ({ formId }: FormButtonsProps) => {
 
   return (
     <div className="flex gap-7 items-center">
+      <Link href={`/forms/${formId}`}>
+        <button className="  px-4 py-2 rounded-xl border border-green-200">
+          View
+        </button>
+      </Link>
       <Link href={`/forms/${formId}/responses`}>
         <button className="  px-4 py-2 rounded-xl border border-green-500">
           Responses
