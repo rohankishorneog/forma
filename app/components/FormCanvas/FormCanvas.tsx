@@ -10,18 +10,43 @@ import FieldDetailsModal from "../FieldDetails/FieldDetailsModal";
 import { fields } from "@/app/constants/constants";
 import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 import { extractClosestEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge";
+import { createForm, updateForm } from "@/lib/actions/forms.actions";
+import { useRouter } from "next/navigation";
+import { getFieldComponent } from "../getFieldComponent/getFieldComponent";
 
+interface FormCanvas {
+  form?: {
+    _id: string;
+    title: string;
+    fields: Field_Types[];
+  };
+  params?: {
+    id: string;
+  };
+}
 
-const FormCanvas = () => {
-  const [formTitle, setFormTitle] = useState("Untitled Form");
-  const [formFields, setFormFields] = useState<Field_Types[]>([]);
+const FormCanvas = ({ form }: FormCanvas) => {
+  const [formTitle, setFormTitle] = useState(form?.title || "Untitled Form");
+  const [formFields, setFormFields] = useState<Field_Types[]>(
+    form?.fields || []
+  );
   const [selectedField, setSelectedField] = useState<Field_Types | null>(null);
+
+  const router = useRouter();
 
   const [isMobile, setIsMobile] = React.useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setIsMobile(window.innerWidth < 768);
   }, []);
+
+  useEffect(() => {
+    if (form) setFormTitle(form?.title || "untitled form");
+  }, [form]);
+
+  useEffect(() => {
+    if (form) setFormFields(form?.fields || []);
+  }, [form]);
 
   const modalRef = useRef<HTMLDialogElement | null>(null);
 
@@ -39,25 +64,6 @@ const FormCanvas = () => {
         ...prevFields,
         { ...field, id: Date.now().toString() },
       ]);
-    }
-  };
-
-  const sortField = (field: Field_Types, overId: string) => {
-    if (field.id) {
-      setFormFields((prevFields) => {
-        // Find the index of the field being dragged
-        const dragIndex = prevFields.findIndex((item) => item.id === field.id);
-
-        // Find the index of the drop target
-        const dropIndex = prevFields.findIndex((item) => item.id === overId);
-
-        // Create a new array with reordered fields
-        const updatedFields = Array.from(prevFields);
-        const [removedField] = updatedFields.splice(dragIndex, 1);
-        updatedFields.splice(dropIndex, 0, removedField);
-
-        return updatedFields;
-      });
     }
   };
 
@@ -147,6 +153,26 @@ const FormCanvas = () => {
     });
   }, [formFields]);
 
+  const handleCreateForm = async () => {
+    console.log("clicking");
+    try {
+      if (form?._id) {
+        const updatedForm = await updateForm(form._id, {
+          title: formTitle,
+          fields: formFields,
+        });
+        router.push(`/forms/${updatedForm._id}`);
+      } else {
+        const newForm = await createForm({
+          title: formTitle,
+          fields: formFields,
+        });
+        console.log(newForm);
+        router.push(`/forms/${newForm._id}`);
+      }
+    } catch (error) {}
+  };
+
   return (
     <>
       <MobileAddFieldButton />
@@ -202,6 +228,12 @@ const FormCanvas = () => {
               </div>
             </DropTarget>
           </div>
+          <button
+            className="bg-green-700 text-white p-2 rounded-md"
+            onClick={handleCreateForm}
+          >
+            {form?._id ? "Update Form" : "Create Form"}
+          </button>
 
           <div className="p-4 bg-gray-100 shadow-lg rounded-md ml-4 hidden md:flex">
             <FieldDetails
@@ -226,28 +258,3 @@ const FormCanvas = () => {
 };
 
 export default FormCanvas;
-
-export const getFieldComponent = (field: Field_Types) => {
-  switch (field.type.toLowerCase()) {
-    case "short answer":
-    case "long answer":
-      return <textarea className="w-full" placeholder={field.placeholder} />;
-    case "select":
-      return (
-        <select className="w-full">
-          {field.options &&
-            field.options.map((option, index) => (
-              <option key={index}>{option}</option>
-            ))}
-        </select>
-      );
-    default:
-      return (
-        <input
-          type={field.type}
-          className="w-full"
-          placeholder={field.placeholder}
-        />
-      );
-  }
-};
