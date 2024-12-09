@@ -13,6 +13,7 @@ const Page = async ({ params }: URLProps) => {
         <p>Check out the responses to your forms here</p>
       </div>
       <div className="flex flex-col gap-5 p-5">
+        {responses.length}
         {responses.map((response) => (
           <ResponseItem response={response} key={response._id} />
         ))}

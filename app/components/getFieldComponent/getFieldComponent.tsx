@@ -30,11 +30,14 @@ export const getFieldComponent = (field: Field_Types) => {
       );
     default:
       return (
-        <input
-          type={field.type}
-          className="w-full flex-1 bg-transparent p-0.5 rounded-sm text-sm"
-          placeholder={field.placeholder}
-        />
+        <div className="flex flex-col w-full gap-2 ">
+          <label>{field.label}</label>
+          <input
+            type={field.type}
+            className="w-full flex-1 bg-transparent p-0.5 rounded-sm text-sm"
+            placeholder={field.placeholder}
+          />
+        </div>
       );
   }
 };
