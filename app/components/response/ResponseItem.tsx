@@ -18,11 +18,14 @@ const ResponseItem = ({ response }: ResponseItemProps) => {
       key={response._id}
       className="flex justify-between items-center border p-5 w-full shadow-md rounded-md"
     >
-      <h3>{response._id}</h3>
+      <h3 className="truncate w-24 md:w-48 text-gray-800 font-bold text-xs  md:text-md">
+        No: {response._id}
+      </h3>
+
       <Link
         href={`/forms/${response.formId.toString()}/responses/${response._id}`}
       >
-        <button className="px-4 py-2 rounded-xl border border-green-500">
+        <button className=" text-xs  md:text-md px-1.5 md:px-4 py-0.5 md:py-1 rounded-xl border border-green-500">
           view
         </button>
       </Link>
