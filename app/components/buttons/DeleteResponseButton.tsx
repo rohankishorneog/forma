@@ -3,13 +3,14 @@
 import { deleteResponseById } from "@/lib/actions/responses.actions";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { ResponseType } from "../response/ResponseItem";
 
 interface DeleteResponseButtonProps {
-  responseId: string;
+  response: ResponseType;
 }
 
 const DeleteResponseButton: React.FC<DeleteResponseButtonProps> = ({
-  responseId,
+  response,
 }) => {
   const router = useRouter();
   const [isDeleting, setIsDeleting] = useState(false);
@@ -17,9 +18,9 @@ const DeleteResponseButton: React.FC<DeleteResponseButtonProps> = ({
   const handleDeleteResponse = async () => {
     setIsDeleting(true);
     try {
-      await deleteResponseById(responseId);
+      await deleteResponseById(response._id);
       // Manually navigate after deletion
-      router.push("/responses");
+      router.push(`/forms/${response.formId}/responses`);
     } catch (error) {
       console.error("Failed to delete response", error);
       setIsDeleting(false);

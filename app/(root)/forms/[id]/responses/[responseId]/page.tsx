@@ -21,7 +21,7 @@ const page = async ({ params }: URLProps) => {
         <h3 className="font-extrabold md:text-4xl text-lg">Response</h3>
         <div className="flex w-full justify-between items-center">
           <p>Title: {response?.title}</p>
-          <DeleteResponseButton responseId={response._id} />
+          <DeleteResponseButton response={response} />
         </div>
       </div>
 

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-interface ResponseType {
+export interface ResponseType {
   _id: string;
   title?: string;
   responseData: { [key: string]: string | number }[];
