@@ -1,5 +1,7 @@
 "use client";
 
+import Edit from "@/app/assets/icons/Edit";
+import Trash from "@/app/assets/icons/Trash";
 import { deleteForm } from "@/lib/actions/forms.actions";
 import Link from "next/link";
 import React from "react";
@@ -28,7 +30,7 @@ const FormButtons = ({ formId }: FormButtonsProps) => {
       <div className="flex flex-col gap-2">
         <Link href={`/forms/${formId}/edit`}>
           <button className="bg-yellow-500 text-white px-3 py-1 rounded-md">
-            E
+            <Edit />
           </button>
         </Link>
 
@@ -36,7 +38,7 @@ const FormButtons = ({ formId }: FormButtonsProps) => {
           className="bg-red-500 text-white px-3 py-1 rounded-md"
           onClick={() => handleDelete(formId)}
         >
-          D
+          <Trash />
         </button>
       </div>
     </div>

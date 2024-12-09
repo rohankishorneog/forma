@@ -40,7 +40,7 @@ const DraggableItem = ({
 
   return (
     <>
-      <div ref={ref} className={`${dragging ? "bg-lime-600" : ""}`}>
+      <div ref={ref} className={`${dragging ? "bg-lime-600" : ""} w-full`}>
         {children}
       </div>
     </>

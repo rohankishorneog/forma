@@ -9,7 +9,7 @@ import React from "react";
 const page = async ({ params }: URLProps) => {
   const response = await getResponseById(params.responseId);
 
-  // Convert Map to an array of key-value pairs for rendering
+  // Converting Map to an array of key-value pairs for rendering
   const responseEntries =
     response?.responseData instanceof Map
       ? Array.from(response.responseData.entries())

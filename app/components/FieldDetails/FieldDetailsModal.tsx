@@ -16,18 +16,12 @@ export type Ref = HTMLDialogElement;
 
 const FieldDetailsModal = forwardRef<Ref, FieldDetailsModalProps>(
   (
-    {
-      selectedField,
-      setSelectedField,
-      handleUpdateField,
-      closeDialog,
-      openDialog,
-    },
+    { selectedField, setSelectedField, handleUpdateField, closeDialog },
     ref
   ) => {
     return (
       <dialog
-        ref={ref}
+        open={selectedField !== null}
         className=" relative rounded-md shadow-lg p-6 bg-white w-96 max-w-full md:hidden"
       >
         <button

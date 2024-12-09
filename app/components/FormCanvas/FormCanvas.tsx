@@ -13,6 +13,8 @@ import { extractClosestEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/clo
 import { createForm, updateForm } from "@/lib/actions/forms.actions";
 import { useRouter } from "next/navigation";
 import { getFieldComponent } from "../getFieldComponent/getFieldComponent";
+import Edit from "@/app/assets/icons/Edit";
+import Trash from "@/app/assets/icons/Trash";
 
 interface FormCanvas {
   form?: {
@@ -82,22 +84,39 @@ const FormCanvas = ({ form }: FormCanvas) => {
   const handleUpdateField = () => {
     if (!selectedField) return;
 
-    if (selectedField.label.length === 0) {
-      console.log("Error");
+    const errors: string[] = [];
+
+    if (selectedField.label.trim().length === 0) {
+      errors.push("Label cannot be empty");
+    }
+
+    if (
+      ["short answer", "long answer"].includes(selectedField.type) &&
+      selectedField.placeholder?.trim().length === 0
+    ) {
+      errors.push("Placeholder cannot be empty");
+    }
+
+    if (
+      selectedField.type === "select" &&
+      selectedField.options?.some((option) => option.trim().length === 0)
+    ) {
+      errors.push("All select options must have a value");
+    }
+
+    if (errors.length > 0) {
+      errors.forEach((error) => console.log(error));
       return;
     }
-    if (selectedField.options?.some((option) => option.length === 0)) {
-      console.log("Error");
-      return;
-    }
+
     setFormFields((prevFields) =>
       prevFields.map((field) =>
         field.id === selectedField.id ? selectedField : field
       )
     );
+
     setSelectedField(null);
   };
-
   const handleFormTitle = (title: string) => {
     setFormTitle(title);
   };
@@ -229,8 +248,18 @@ const FormCanvas = ({ form }: FormCanvas) => {
                         {getFieldComponent(field)}
 
                         <div className=" flex flex-col gap-2">
-                          <button onClick={() => handleEdit(field)}>E</button>
-                          <button onClick={() => handleRemove(field)}>R</button>
+                          <button
+                            onClick={() => handleEdit(field)}
+                            className="bg-yellow-500 text-white px-3 py-1 rounded-md"
+                          >
+                            <Edit />
+                          </button>
+                          <button
+                            onClick={() => handleRemove(field)}
+                            className="bg-orange-500 text-white px-3 py-1 rounded-md"
+                          >
+                            <Trash />
+                          </button>
                         </div>
                       </div>
                     </DraggableItem>

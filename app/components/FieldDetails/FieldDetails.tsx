@@ -19,7 +19,6 @@ const FieldDetails = ({
     value: string,
     index?: number
   ) => {
-    if (!value) return;
     setSelectedField((prev) => {
       if (!prev) return prev;
 
