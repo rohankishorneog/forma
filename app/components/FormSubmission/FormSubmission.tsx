@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, FormEvent, useEffect } from "react";
+import { toast } from "react-toastify";
 import { Field_Types } from "@/app/types";
 import { getFieldComponent } from "@/app/components/getFieldComponent/getFieldComponent";
 import { createResponse } from "@/lib/actions/responses.actions";
@@ -47,7 +48,6 @@ export default function FormSubmission({
     e.preventDefault();
 
     try {
-      // Convert formResponses to the array of objects format
       const responseData = Object.entries(formResponses).map(
         ([key, value]) => ({ [key]: value })
       );
@@ -55,10 +55,27 @@ export default function FormSubmission({
       console.log("Submitting form responses:", responseData);
       await createResponse(formId.toString(), responseData);
 
-      alert("Form submitted successfully!");
+      toast.success("Form submitted successfully!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      setFormResponses({});
     } catch (error) {
       console.error("Form submission error:", error);
-      alert("Failed to submit form");
+      toast.error("Failed to submit form", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
