@@ -5,6 +5,7 @@ import Trash from "@/app/assets/icons/Trash";
 import { deleteForm } from "@/lib/actions/forms.actions";
 import Link from "next/link";
 import React from "react";
+import { toast } from "react-toastify";
 
 interface FormButtonsProps {
   formId: string;
@@ -12,7 +13,18 @@ interface FormButtonsProps {
 
 const FormButtons = ({ formId }: FormButtonsProps) => {
   const handleDelete = async (id: string) => {
-    await deleteForm(id);
+    try {
+      await deleteForm(id);
+      return toast("Deleted", {
+        position: "top-center",
+        type: "success",
+      });
+    } catch (error) {
+      toast("Failed to delete", {
+        position: "top-center",
+        type: "error",
+      });
+    }
   };
 
   return (

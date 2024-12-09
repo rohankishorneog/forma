@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { getFieldComponent } from "../getFieldComponent/getFieldComponent";
 import Edit from "@/app/assets/icons/Edit";
 import Trash from "@/app/assets/icons/Trash";
+import { toast } from "react-toastify";
 
 interface FormCanvas {
   form?: {
@@ -88,25 +89,30 @@ const FormCanvas = ({ form }: FormCanvas) => {
 
     if (selectedField.label.trim().length === 0) {
       errors.push("Label cannot be empty");
+      return toast("Label Can't be empty", {
+        position: "top-center",
+        type: "error",
+      });
     }
 
     if (
       ["short answer", "long answer"].includes(selectedField.type) &&
       selectedField.placeholder?.trim().length === 0
     ) {
-      errors.push("Placeholder cannot be empty");
+      return toast("Placeholder Can't be empty", {
+        position: "top-center",
+        type: "error",
+      });
     }
 
     if (
       selectedField.type === "select" &&
       selectedField.options?.some((option) => option.trim().length === 0)
     ) {
-      errors.push("All select options must have a value");
-    }
-
-    if (errors.length > 0) {
-      errors.forEach((error) => console.log(error));
-      return;
+      return toast("Options cant be empty,", {
+        position: "top-center",
+        type: "error",
+      });
     }
 
     setFormFields((prevFields) =>
@@ -114,6 +120,7 @@ const FormCanvas = ({ form }: FormCanvas) => {
         field.id === selectedField.id ? selectedField : field
       )
     );
+    toast("Updated", { position: "top-center", type: "success" });
 
     setSelectedField(null);
   };
@@ -181,6 +188,10 @@ const FormCanvas = ({ form }: FormCanvas) => {
           fields: formFields,
         });
         router.push(`/forms/${updatedForm._id}`);
+        toast("Succesfully Created", {
+          position: "top-center",
+          type: "success",
+        });
       } else {
         const newForm = await createForm({
           title: formTitle,
@@ -189,7 +200,9 @@ const FormCanvas = ({ form }: FormCanvas) => {
         console.log(newForm);
         router.push(`/forms/${newForm._id}`);
       }
-    } catch (error) {}
+    } catch (error) {
+      toast("Error creating form", { position: "top-center", type: "error" });
+    }
   };
 
   return (
