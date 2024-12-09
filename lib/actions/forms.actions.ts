@@ -72,7 +72,7 @@ export async function updateForm(
         ...(fieldsToUpdate && { fields: fieldsToUpdate }),
       },
       {
-        new: true, 
+        new: true,
         runValidators: true,
       }
     );
@@ -163,7 +163,7 @@ export async function getAllForms() {
   try {
     connectToDatabase();
 
-    const forms = await Form.find({});
+    const forms = await Form.find({}).sort({ updatedAt: -1, createdAt: -1 });
 
     return forms;
   } catch (error) {

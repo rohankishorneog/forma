@@ -46,7 +46,7 @@ export async function getResponsesByFormId(formId: string) {
       throw new Error("Form not found");
     }
 
-    const responses = await Response.find({ formId });
+    const responses = await Response.find({ formId }).sort({createdAt:-1});
 
     return responses.map((response) => ({
       _id: response._id.toString(),

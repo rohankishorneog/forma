@@ -26,7 +26,9 @@ const page = async () => {
             className="flex justify-between items-center border p-5 w-full shadow-md rounded-md"
           >
             <div>
-              <h4 className="text-lg font-semibold">{form.title}</h4>
+              <h4 className=" md:text-lg font-semibold w-20 md:w-96 truncate">
+                {form.title}
+              </h4>
               <p className="text-gray-500 text-sm">
                 {new Date(form.createdAt).toLocaleString()}
               </p>
