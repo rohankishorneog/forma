@@ -53,9 +53,6 @@ export default function FormSubmission({
 
       {fields.map((field) => (
         <div key={field.id} className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            {field.label}
-          </label>
           <div className="w-full">
             {React.cloneElement(getFieldComponent(field), {
               onChange: (
