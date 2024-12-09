@@ -10,10 +10,11 @@ const page = async ({ params }: URLProps) => {
   const response = await getResponseById(params.responseId);
 
   // Converting Map to an array of key-value pairs for rendering
-  const responseEntries =
-    response?.responseData instanceof Map
-      ? Array.from(response.responseData.entries())
-      : [];
+  const responseEntries = response?.responseData
+    ? response.responseData.flatMap((obj) =>
+        Object.entries(obj).map(([key, value]) => [key, value])
+      )
+    : [];
 
   return (
     <div className="flex flex-col justify-center p-10">

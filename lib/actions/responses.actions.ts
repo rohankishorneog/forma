@@ -71,9 +71,14 @@ export async function getResponseById(responseId: string) {
       throw new Error("Response not found");
     }
 
+    console.log({
+      _id: response._id.toString(),
+      formId: response.formId.toString(),
+      responseData: response.responseData,
+    });
     return {
       _id: response._id.toString(),
-      formId: response.formId,
+      formId: response.formId.toString(),
       responseData: response.responseData,
     };
   } catch (error) {

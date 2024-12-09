@@ -12,7 +12,7 @@ const responseSchema = new Schema<Responses>(
   {
     formId: { type: Schema.Types.ObjectId, ref: "Form", required: true },
     formTitle: { type: String },
-    responseData: [{ type: Map, of: Schema.Types.Mixed }],
+    responseData: { type: Schema.Types.Mixed },
   },
   {
     timestamps: true,
