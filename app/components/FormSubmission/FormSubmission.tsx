@@ -4,6 +4,7 @@
 import React, { useState, FormEvent } from "react";
 import { Field_Types } from "@/app/types";
 import { getFieldComponent } from "@/app/components/getFieldComponent/getFieldComponent";
+import { createResponse } from "@/lib/actions/responses.actions";
 
 interface FormSubmissionProps {
   formId: string;
@@ -16,16 +17,15 @@ export default function FormSubmission({
   fields,
   formTitle,
 }: FormSubmissionProps) {
-  // State to track form responses
   const [formResponses, setFormResponses] = useState<{ [key: string]: string }>(
     {}
   );
 
   // Handle input changes
-  const handleInputChange = (fieldId: string, value: string) => {
+  const handleInputChange = (label: string, value: string) => {
     setFormResponses((prev) => ({
       ...prev,
-      [fieldId]: value,
+      [label]: value,
     }));
   };
 
@@ -34,11 +34,8 @@ export default function FormSubmission({
     e.preventDefault();
 
     try {
-      // TODO: Implement form submission logic
       console.log("Submitting form responses:", formResponses);
-
-      // Example of how you might send the data
-      // const response = await submitFormResponses(formId, formResponses);
+      await createResponse(formId.toString(), formResponses);
 
       alert("Form submitted successfully!");
     } catch (error) {
@@ -65,8 +62,8 @@ export default function FormSubmission({
                 e: React.ChangeEvent<
                   HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
                 >
-              ) => handleInputChange(field.id || "", e.target.value),
-              value: formResponses[field.id || ""] || "",
+              ) => handleInputChange(field.label || "", e.target.value),
+              value: formResponses[field.label || ""] || "",
             })}
           </div>
         </div>
