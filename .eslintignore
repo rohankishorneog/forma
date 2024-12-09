@@ -1,0 +1,6 @@
+# Ignore specific files or patterns
+node_modules/
+.next/
+public/
+*.config.js
+*.d.ts
